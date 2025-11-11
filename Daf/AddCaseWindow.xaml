@@ -1,0 +1,71 @@
+﻿<Window x:Class="Daf.AddCaseWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Daf"
+        mc:Ignorable="d"
+           Title="Добавление новых дел" Height="450" Width="400">
+
+    <Window.Resources>
+
+        <Style TargetType="TextBox">
+            <Setter Property="ItemsControl.BorderBrush" Value="#5EBEC4"/>
+            <Setter Property="ItemsControl.BorderThickness" Value="1.5"/>
+        </Style>
+
+        <Style TargetType="DatePicker">
+            <Setter Property="SelectedDateFormat" Value="Long"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="#5EBEC4"/>
+            <Setter Property="Background" Value="#FFFFFAD6"/>
+
+        </Style>
+
+        <Style x:Key="HeaderStyle">
+            <Setter Property="ItemsControl.FontSize" Value="26"/>
+            <Setter Property="ItemsControl.Foreground" Value="#5EBEC4"/>
+            <Setter Property="ItemsControl.FontWeight" Value="Bold"/>
+            <Setter Property="ItemsControl.FontFamily" Value="Cascadia Mono"/>
+
+
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#5EBEC4"/>
+            <Setter Property="ItemsControl.FontFamily" Value="Cascadia Mono"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Style="{StaticResource HeaderStyle}"  Grid.Row="0" Text="Новое дело" FontSize="26" HorizontalAlignment="Center" />
+
+        <StackPanel Grid.Row="1"  Name ="groupBoxToDo"  Margin="5" Background="#FDF5DF" >
+            <StackPanel Margin="5" >
+                <TextBlock  FontSize="12" Text="Название:"/>
+                <TextBox Name = "titleToDo"  Margin="0, 10" HorizontalScrollBarVisibility="Auto"></TextBox>
+                <TextBlock FontSize="12" Text="Выполнить до:"/>
+                <DatePicker  Name = "dateToDo"  Margin="0, 10" >
+                    <DatePicker.CalendarStyle>
+                        <Style TargetType="Calendar">
+                            <Setter Property="BorderThickness" Value="1.5"/>
+                            <Setter Property="BorderBrush" Value="#5EBEC4"/>
+                            <Setter Property="Background" Value="White"/>
+                        </Style>
+                    </DatePicker.CalendarStyle>
+                </DatePicker>
+                <TextBlock FontSize="12" Text="Описание:"/>
+                <TextBox  AcceptsTab="True" AcceptsReturn="True"  Name = "descriptionToDo"  Margin="0, 10" MaxLines="10" MinLines="10" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"></TextBox>
+            </StackPanel>
+        </StackPanel>
+
+        <Button  Grid.Row="2" Name="buttonSave" Click="SaveCase" Content="Сохранить дело" Background="#5EBEC4" Height="30" Width="110" Margin="5"/>
+    </Grid>
+</Window>
