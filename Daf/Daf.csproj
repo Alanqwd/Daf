@@ -8,4 +8,16 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Images\Krestik.jpg" />
+    <None Remove="Images\Plusik.png" />
+    <None Remove="Images\Крестик.jpg" />
+    <None Remove="Images\Плюс.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Krestik.jpg" />
+    <Resource Include="Images\Plusik.png" />
+  </ItemGroup>
+
 </Project>

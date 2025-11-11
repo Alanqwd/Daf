@@ -54,13 +54,6 @@
             </Style.Triggers>
         </Style>
 
-        <Style TargetType="ListBoxItem">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=State}" Value="WA">
-                    <Setter Property="Foreground" Value="Red" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
 
     </Window.Resources>
 
@@ -87,7 +80,7 @@
         <TextBlock Style="{StaticResource HeaderStyle}" Grid.Row="0" Grid.Column="0" Text="Список дел" FontSize="26" HorizontalAlignment="Left" />
 
         <Button HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"  Name="buttonAdd" Click="AddCase" Background="#5EBEC4" Height="30" Width="60" Margin="135,5,0,5">
-            <Image Source="Images/Плюс.png" Height="25"></Image>
+            <Image Source="/Images/Plusik.png" Height="25"></Image>
         </Button>
 
         <ListBox HorizontalContentAlignment = "Stretch" x:Name="ListBoxToDo" Background="#FDF5DF" Grid.ColumnSpan="2" Grid.Row="1" Grid.Column="0" Margin="5" Width="380">
@@ -113,11 +106,12 @@
                         <TextBlock Margin="2, 0, 2, 0" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" FontSize="14" Text="{Binding Path=TimeOfCompleating, StringFormat=dd.MM.yyyy}"></TextBlock>
 
                         <Button Grid.Column="3" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Name="buttonDel" Click="DelCase"  Background="#5EBEC4" Height="20" Width="20" Margin="2">
-                            <Image Source="Images/Крестик.jpg" Height="18"></Image>
+                            <Image Source="/Images/Krestik.jpg" Height="18"></Image>
                         </Button>
 
                         <TextBlock  Margin="2, 0, 2, 0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"  FontSize="12" Text="{Binding Path=Description}"></TextBlock>
 
+                        
 
                     </Grid>
 
