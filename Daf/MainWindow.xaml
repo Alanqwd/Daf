@@ -53,8 +53,21 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-
-
+        
+        <Style TargetType="TextBlock" x:Key="DateSvetRed">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=TimeOfCompleating, Converter={StaticResource LessDayConverter}}" Value="True">
+                    <Setter Property="Foreground" Value="Red"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="DateSvet">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=TimeOfCompleating, Converter={StaticResource LessDayConverter}}" Value="True">
+                    <Setter Property="Foreground" Value="#FFEA6A20"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
 
@@ -103,7 +116,7 @@
 
                         <TextBlock Margin="2, 0, 2, 0" Grid.Row="0" Grid.Column="1" FontSize="14" Style="{StaticResource CrossLine}"  Text="{Binding Path=CaseName}"/>
 
-                        <TextBlock Margin="2, 0, 2, 0" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" FontSize="14" Text="{Binding Path=TimeOfCompleating, StringFormat=dd.MM.yyyy}"></TextBlock>
+                        <TextBlock Margin="2, 0, 2, 0" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" FontSize="14" Style="{StaticResource DateSvetRed}"  Text="{Binding Path=TimeOfCompleating, StringFormat=dd.MM.yyyy}"></TextBlock>
 
                         <Button Grid.Column="3" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Name="buttonDel" Click="DelCase"  Background="#5EBEC4" Height="20" Width="20" Margin="2">
                             <Image Source="/Images/Krestik.jpg" Height="18"></Image>

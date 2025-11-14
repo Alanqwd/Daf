@@ -52,7 +52,6 @@ namespace Daf
                 titleToDo.Text = null;
                 dateToDo.SelectedDate = null;
                 descriptionToDo.Text = null;
-
                 main.UpdateList();
                 main.compleatedCases = 0;
                 main.CasesProgress.Value = 0;

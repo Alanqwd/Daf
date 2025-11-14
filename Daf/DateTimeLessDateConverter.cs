@@ -10,16 +10,23 @@ namespace Daf
 {
     public class DateTimeLessDateConverter : IValueConverter
     {
+
         public object Convert(object value,
         Type targetType, object parameter, CultureInfo culture)
         {
-            var d = value as DateTime?;
-            if (d != null)
+            var red = value as DateTime?;
+            if (red != null)
             {
-                return DateTime.Now > d.Value;
+                return DateTime.Now > red.Value;
+            }
+            return false;
+            if (red == null)
+            {
+                return DateTime.Now > red.Value;
             }
             return false;
         }
+     
         public object ConvertBack(object value,
             Type targetType, object parameter, CultureInfo culture)
         {
