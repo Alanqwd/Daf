@@ -8,8 +8,10 @@
            Title="Список дел" Height="450" Width="400">
 
     <Window.Resources>
+        <local:DataTimeBiggerDateConverter x:Key="BiggerDayConverter"/>
+        <local:DataTimeEqualsDateConverter x:Key="EqualsDayConverter"/>
+        <local:DateTimeLessDateConverter x:Key="LessDayConverter"/>
 
-        <local:DateTimeLessDateConverter x:Key="LessDayConverter"></local:DateTimeLessDateConverter>
 
         <Style TargetType="DataGrid">
             <Setter Property="AutoGenerateColumns" Value="False"/>
@@ -29,23 +31,6 @@
             <Setter Property="ItemsControl.FontFamily" Value="Cascadia Mono"></Setter>
         </Style>
 
-
-        <Style TargetType="Button">
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="BorderThickness" Value="3"/>
-                </Trigger>
-            </Style.Triggers>
-
-        </Style>
-        <Style TargetType="ListBoxItem">
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="FontWeight" Value="Bold"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
         <Style TargetType="TextBlock" x:Key="CrossLine">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding ElementName=Comp, Path=IsChecked}" Value="True">
@@ -53,21 +38,47 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        
-        <Style TargetType="TextBlock" x:Key="DateSvetRed">
+
+        <Style TargetType="TextBlock">
             <Style.Triggers>
+                <Trigger Property="Control.IsFocused" Value="True">
+                    <Setter Property="ItemsControl.Background" Value="#FFFFFAD6" ></Setter>
+                    <Setter Property="ItemsControl.BorderThickness" Value="2"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="Berr">
+            <Style.Triggers>
+                <Trigger Property="Control.IsFocused" Value="True">
+                    <Setter Property="ItemsControl.FontWeight" Value="Bold"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="Color">
+
+            <Style.Triggers>
+
                 <DataTrigger Binding="{Binding Path=TimeOfCompleating, Converter={StaticResource LessDayConverter}}" Value="True">
                     <Setter Property="Foreground" Value="Red"></Setter>
                 </DataTrigger>
-            </Style.Triggers>
-        </Style>
-        <Style TargetType="TextBlock" x:Key="DateSvet">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=TimeOfCompleating, Converter={StaticResource LessDayConverter}}" Value="True">
-                    <Setter Property="Foreground" Value="#FFEA6A20"></Setter>
+                <DataTrigger Binding="{Binding Path=TimeOfCompleating, Converter={StaticResource LessDayConverter}}" Value="False">
+                    <Setter Property="Foreground" Value="Green"></Setter>
                 </DataTrigger>
+                <DataTrigger Binding="{Binding Path=TimeOfCompleating, Converter={StaticResource EqualsDayConverter}}" Value="True">
+                    <Setter Property="Foreground" Value="Yellow"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=TimeOfCompleating, Converter={StaticResource BiggerDayConverter}}" Value="True">
+                    <Setter Property="Foreground" Value="Orange"></Setter>
+                </DataTrigger>
+
+
+
             </Style.Triggers>
         </Style>
+
+
     </Window.Resources>
 
 
@@ -96,7 +107,7 @@
             <Image Source="/Images/Plusik.png" Height="25"></Image>
         </Button>
 
-        <ListBox HorizontalContentAlignment = "Stretch" x:Name="ListBoxToDo" Background="#FDF5DF" Grid.ColumnSpan="2" Grid.Row="1" Grid.Column="0" Margin="5" Width="380">
+        <ListBox ItemContainerStyle="{StaticResource Berr}" HorizontalContentAlignment = "Stretch" x:Name="ListBoxToDo" Background="#FDF5DF" Grid.ColumnSpan="3" Grid.Row="1" Grid.Column="0" Margin="5" Width="380">
             <ListBox.ItemTemplate >
                 <DataTemplate >
                     <Grid>
@@ -116,15 +127,18 @@
 
                         <TextBlock Margin="2, 0, 2, 0" Grid.Row="0" Grid.Column="1" FontSize="14" Style="{StaticResource CrossLine}"  Text="{Binding Path=CaseName}"/>
 
-                        <TextBlock Margin="2, 0, 2, 0" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" FontSize="14" Style="{StaticResource DateSvetRed}"  Text="{Binding Path=TimeOfCompleating, StringFormat=dd.MM.yyyy}"></TextBlock>
+                        <TextBlock Margin="2, 0, 2, 0" Grid.Row="0" Grid.Column="2"
+                                   HorizontalAlignment="Right" FontSize="14"
+                                   Style="{StaticResource Color}" Text="{Binding Path=TimeOfCompleating, StringFormat=dd.MM.yyyy}">
+
+                        </TextBlock>
 
                         <Button Grid.Column="3" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Name="buttonDel" Click="DelCase"  Background="#5EBEC4" Height="20" Width="20" Margin="2">
-                            <Image Source="/Images/Krestik.jpg" Height="18"></Image>
+                            <Image Source="Images/Крестик.jpg" Height="18"></Image>
                         </Button>
 
                         <TextBlock  Margin="2, 0, 2, 0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"  FontSize="12" Text="{Binding Path=Description}"></TextBlock>
 
-                        
 
                     </Grid>
 
@@ -132,13 +146,14 @@
             </ListBox.ItemTemplate>
 
         </ListBox>
-        <ProgressBar Foreground="#5EBEC4" x:Name="CasesProgress" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Width="380" Height="20" Margin="5">
+
+        <ProgressBar Foreground="#5EBEC4" x:Name="CasesProgress" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Width="Auto" Height="20" Margin="5">
 
         </ProgressBar>
-        <TextBlock Margin="5" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center">
-    <Run Name="Val"></Run>
-    <Run>/</Run>
-    <Run Name="Max"></Run>
+        <TextBlock Margin="5" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Run Name="Val"></Run>
+            <Run>/</Run>
+            <Run Name="Max"></Run>
         </TextBlock>
     </Grid>
 </Window>
