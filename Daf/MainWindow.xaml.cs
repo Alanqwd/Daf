@@ -113,5 +113,72 @@ namespace Daf
 
             todo.IsCompleted = false;
         }
+        private void SaveCase(object sender, RoutedEventArgs e)
+{
+    if (CasesList.Count == 0)
+    {
+        MessageBox.Show("В списке нет дел");
+    }
+    else
+    {
+
+        var dialog = new Microsoft.Win32.SaveFileDialog();
+        dialog.FileName = "Saved_list"; 
+        dialog.DefaultExt = ".txt"; 
+        dialog.Filter = "Text File|*.txt"; 
+
+     
+        bool? result = dialog.ShowDialog();
+
+        
+        if (result == true)
+        {
+            
+            string filePath = dialog.FileName;
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+
+                foreach (var i in CasesList)
+                {
+                    DateOnly d = DateOnly.FromDateTime(i.TimeOfCompleating.Value);
+                    if (i.IsCompleted == true)
+                    {
+                        writer.Write("✓");
+                    }
+                    else
+                    {
+                        writer.Write(" ");
+                    }
+                    writer.WriteLine(i.CaseName);
+                    writer.WriteLine("");
+                    writer.WriteLine(i.Description);
+                    writer.WriteLine("");
+                    writer.WriteLine(d.ToString());
+                    writer.WriteLine("");
+                    writer.WriteLine("");
+                }
+            }
+        }
+
+        var dia = new Microsoft.Win32.SaveFileDialog();
+        dia.FileName = "Saved_list";
+        dia.DefaultExt = ".json"; 
+        dia.Filter = "Text File|*.json"; 
+
+  bool? result2 = dia.ShowDialog();
+
+        if (result2 == true)
+        {
+            string filePath2 = dia.FileName;
+            
+            var settings = new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented
+            };
+            string json = JsonConvert.SerializeObject(CasesList, settings);
+            File.WriteAllText(filePath2, json);
+        }
+    }
+}
     }
 }
